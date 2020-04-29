@@ -1,7 +1,7 @@
 require("chromedriver");
 const hs = require("http-server");
 const path = require("path");
-const {Builder } = require('selenium-webdriver');
+const {Builder, By } = require('selenium-webdriver');
 
 const server = hs.createServer({
     root: path.join(__dirname, '..', 'static')
