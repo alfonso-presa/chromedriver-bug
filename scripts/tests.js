@@ -2,21 +2,21 @@ const { By } = require('selenium-webdriver');
 
 module.exports = async function (driver) {
 
+    async function testFrame(frame) {
+        await driver.switchTo().frame(frame);
+        await new Promise(res => setTimeout(res, 1000));
+        const button = await driver.findElement(By.css('button'));
+        await button.click();
+        console.log("Element clicked without failure");
+        await driver.switchTo().parentFrame();
+    }
+
+
     await driver.get('http://localhost:9090');
-
-    console.log("Searching for element");
-    //This line searches an element in depth inside the frames and returns it
-    await driver.findElement(By.js(() => window.frames[0].frames[0].document.querySelector('h1')));
-
-    console.log("Switch frame");
-    //Now we switch to the frame containing the element
-    await driver.switchTo().frame(await driver.findElement(By.css('iframe')));
-    await driver.switchTo().frame(await driver.findElement(By.css('iframe')));
-
-    console.log("This one works");
-    await (await driver.findElement(By.css('h2'))).isDisplayed();
-    console.log("This one fails");
-    //If the element was returned in the script above it is somehow cached and stale element is thrown.
-    await (await driver.findElement(By.css('h1'))).isDisplayed();
-
+    const lightFrame = await driver.findElement(By.js(() => document.querySelector('#light iframe')));
+    const shadowFrame = await driver.findElement(By.js(() => document.querySelector('#shadow').shadowRoot.querySelector('iframe')));
+    console.log("this one works");
+    await testFrame(lightFrame);
+    console.log("this one raises a 'no element reference returned by script'")
+    await testFrame(shadowFrame);
 }

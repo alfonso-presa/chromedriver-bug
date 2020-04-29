@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/selenium-webdriver": "3.0.8",
     "chromedriver": "^81.0.0",
     "http-server": "^0.12.1"
   },

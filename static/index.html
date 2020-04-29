@@ -1,6 +1,24 @@
-<!DOCTYPE html>
 <html>
-    <body>
-        <iframe src="./iframe1.html"></iframe>
-    </body>
+
+<head>
+    <script>
+        function addIframe(parent) {
+            let iframe = document.createElement('iframe');
+            iframe.src = './component';
+            parent.appendChild(iframe);
+        }
+        function load() {
+            let shadow = document.getElementById('shadow').attachShadow({ mode: 'open' });
+            let light = document.getElementById('light');
+            addIframe(shadow);
+            addIframe(light);
+        }
+    </script>
+</head>
+
+<body onload="load()">
+    <div id="shadow"></div>
+    <div id="light"></div>
+</body>
+
 </html>
